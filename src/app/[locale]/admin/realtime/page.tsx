@@ -91,7 +91,7 @@ export default async function AdminRealtimePage({
     }, {} as Record<string, number>) || {};
 
   const sortedEvents = Object.entries(eventDistribution)
-    .sort(([, a], [, b]) => b - a)
+    .sort(([, a], [, b]) => (b as number) - (a as number))
     .slice(0, 10);
 
   return (
