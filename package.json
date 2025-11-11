@@ -1,0 +1,38 @@
+{
+  "name": "lonieve-gift",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:types": "supabase gen types typescript --local > src/types/database.types.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.45.4",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.553.0",
+    "next": "14.2.18",
+    "papaparse": "^5.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.13.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/papaparse": "^5.3.14",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.18",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5"
+  }
+}
