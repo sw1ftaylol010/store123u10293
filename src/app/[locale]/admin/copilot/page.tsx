@@ -102,7 +102,7 @@ export default function AdminCopilotPage() {
               <div className="flex-1">
                 <p className="text-white font-medium mb-1">{result.query}</p>
                 <div className="flex items-center gap-2">
-                  <Badge variant="info">{result.intent}</Badge>
+                  <Badge variant="primary">{result.intent}</Badge>
                   <span className="text-xs text-text-muted">
                     {result.responseTime}ms
                   </span>
