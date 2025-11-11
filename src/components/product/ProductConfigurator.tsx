@@ -24,7 +24,7 @@ export function ProductConfigurator({ product, locale }: ProductConfiguratorProp
   const router = useRouter();
 
   const [selectedNominal, setSelectedNominal] = useState(product.available_nominals[0]);
-  const [deliveryType, setDeliveryType] = useState<'myself' | 'gift'>('myself');
+  const [deliveryType, setDeliveryType] = useState<'self' | 'gift'>('self');
   
   // Track configurator open on mount
   useEffect(() => {
@@ -45,7 +45,7 @@ export function ProductConfigurator({ product, locale }: ProductConfiguratorProp
     Analytics.configuratorChange(product.id, nominal, deliveryType);
   };
   
-  const handleDeliveryTypeChange = (type: 'myself' | 'gift') => {
+  const handleDeliveryTypeChange = (type: 'self' | 'gift') => {
     setDeliveryType(type);
     Analytics.configuratorChange(product.id, selectedNominal, type);
   };
@@ -108,9 +108,9 @@ export function ProductConfigurator({ product, locale }: ProductConfiguratorProp
         </h3>
         <div className="grid grid-cols-2 gap-3">
           <button
-            onClick={() => handleDeliveryTypeChange('myself')}
+            onClick={() => handleDeliveryTypeChange('self')}
             className={`p-4 rounded-lg border-2 transition-all ${
-              deliveryType === 'myself'
+              deliveryType === 'self'
                 ? 'border-primary bg-primary/10'
                 : 'border-white/10 hover:border-white/30'
             }`}
