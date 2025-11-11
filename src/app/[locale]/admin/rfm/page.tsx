@@ -217,7 +217,7 @@ export default async function AdminRFMPage({
   );
 }
 
-function getSegmentBadge(segment: string): 'success' | 'warning' | 'error' | 'info' {
+function getSegmentBadge(segment: string): 'success' | 'warning' | 'error' | 'primary' {
   if (segment === 'VIP Champions' || segment === 'Loyal Customers' || segment === 'Big Spenders') {
     return 'success';
   }
@@ -227,6 +227,6 @@ function getSegmentBadge(segment: string): 'success' | 'warning' | 'error' | 'in
   if (segment === 'Lost') {
     return 'error';
   }
-  return 'info';
+  return 'primary';
 }
 
