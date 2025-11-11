@@ -153,7 +153,7 @@ export default async function AdminRealtimePage({
                     />
                   </div>
                 </div>
-                <span className="text-sm text-text-secondary ml-3">{count}</span>
+                <span className="text-sm text-text-secondary ml-3">{count as number}</span>
               </div>
             ))}
           </div>
