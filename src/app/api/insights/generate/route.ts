@@ -20,8 +20,8 @@ export async function GET(request: NextRequest) {
       generated_at: new Date().toISOString(),
       period: 'last_7_days',
       anomalies: anomalies || [],
-      summary: generateSummary(channels, anomalies),
-      recommendations: generateRecommendations(channels, anomalies),
+      summary: generateSummary(channels, anomalies || []),
+      recommendations: generateRecommendations(channels, anomalies || []),
     };
 
     return NextResponse.json(insights);
