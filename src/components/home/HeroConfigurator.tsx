@@ -29,8 +29,8 @@ export function HeroConfigurator({ locale, products }: HeroConfiguratorProps) {
   const router = useRouter();
   
   // Get unique brands and regions
-  const brands = [...new Set(products.map(p => p.brand))].sort();
-  const allRegions = [...new Set(products.map(p => p.region))].sort();
+  const brands = Array.from(new Set(products.map(p => p.brand))).sort();
+  const allRegions = Array.from(new Set(products.map(p => p.region))).sort();
   
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('');
@@ -39,7 +39,7 @@ export function HeroConfigurator({ locale, products }: HeroConfiguratorProps) {
   
   // Filter available regions based on selected brand
   const availableRegions = selectedBrand 
-    ? [...new Set(products.filter(p => p.brand === selectedBrand).map(p => p.region))].sort()
+    ? Array.from(new Set(products.filter(p => p.brand === selectedBrand).map(p => p.region))).sort()
     : allRegions;
   
   // Get available amounts for selected brand and region
