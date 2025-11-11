@@ -4,6 +4,9 @@ import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
 import type { Locale } from '@/lib/i18n/config';
 import { locales } from '@/lib/i18n/config';
 
+// Force dynamic rendering for all pages
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
