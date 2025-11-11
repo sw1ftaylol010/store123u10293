@@ -145,7 +145,7 @@ export const EventTypes = {
 } as const;
 
 // Валидация event_type
-const VALID_EVENT_TYPES = new Set(Object.values(EventTypes));
+const VALID_EVENT_TYPES = new Set<string>(Object.values(EventTypes));
 
 function isValidEventType(eventType: string): boolean {
   return VALID_EVENT_TYPES.has(eventType);
