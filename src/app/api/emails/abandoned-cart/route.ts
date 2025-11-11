@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { withRateLimit, RATE_LIMITS } from '@/lib/ratelimit';
 
 /**
  * Abandoned Cart Email System
@@ -12,6 +13,12 @@ import { createClient } from '@/lib/supabase/server';
  * This endpoint should be called by a cron job every hour
  */
 export async function POST(request: NextRequest) {
+  // 🔒 Rate limiting: Max 5 requests per minute (for cron protection)
+  const rateLimitResult = await withRateLimit(request, RATE_LIMITS.EMAIL_CAMPAIGNS);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const supabase = await createClient();
     

@@ -119,6 +119,15 @@ export const RATE_LIMITS = {
   // Moderate for analytics
   EVENTS: { limit: 100, window: 60 }, // 100 events per minute
   
+  // Marketing features
+  PROMO_CODES: { limit: 20, window: 60 }, // 20 promo validations per minute
+  REVIEWS: { limit: 10, window: 60 }, // 10 reviews per minute
+  REFERRALS: { limit: 10, window: 60 }, // 10 referral actions per minute
+  PRICE_ALERTS: { limit: 15, window: 60 }, // 15 price alerts per minute
+  
+  // Email campaigns (internal only, but still protected)
+  EMAIL_CAMPAIGNS: { limit: 5, window: 60 }, // 5 requests per minute
+  
   // Lenient for general API
   API: { limit: 60, window: 60 }, // 60 requests per minute
 } as const;

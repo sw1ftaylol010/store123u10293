@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { withRateLimit, RATE_LIMITS } from '@/lib/ratelimit';
 import { z } from 'zod';
 
 const createAlertSchema = z.object({
@@ -10,6 +11,12 @@ const createAlertSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  // 🔒 Rate limiting: Max 15 price alerts per minute
+  const rateLimitResult = await withRateLimit(request, RATE_LIMITS.PRICE_ALERTS);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const supabase = await createClient();
     const body = await request.json();

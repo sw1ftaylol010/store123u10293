@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { withRateLimit, RATE_LIMITS } from '@/lib/ratelimit';
 
 export async function POST(request: NextRequest) {
+  // 🔒 Rate limiting: Max 10 referral tracking per minute
+  const rateLimitResult = await withRateLimit(request, RATE_LIMITS.REFERRALS);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const supabase = await createClient();
     const { referralCode } = await request.json();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { withRateLimit, RATE_LIMITS } from '@/lib/ratelimit';
 import { z } from 'zod';
 
 const createReviewSchema = z.object({
@@ -13,6 +14,12 @@ const createReviewSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  // 🔒 Rate limiting: Max 10 reviews per minute
+  const rateLimitResult = await withRateLimit(request, RATE_LIMITS.REVIEWS);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const supabase = await createClient();
     
@@ -83,7 +90,7 @@ export async function POST(request: NextRequest) {
     // For now, we'll track it in the review
     
     // Track achievement progress
-    const { data: reviewCount } = await supabase
+    const { count: reviewCount } = await supabase
       .from('reviews')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', user.id);

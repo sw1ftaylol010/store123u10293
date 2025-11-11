@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { withRateLimit, RATE_LIMITS } from '@/lib/ratelimit';
 import { z } from 'zod';
 
 const createReferralSchema = z.object({
@@ -7,6 +8,12 @@ const createReferralSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  // 🔒 Rate limiting: Max 10 referral actions per minute
+  const rateLimitResult = await withRateLimit(request, RATE_LIMITS.REFERRALS);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const supabase = await createClient();
     
