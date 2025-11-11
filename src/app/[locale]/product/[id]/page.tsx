@@ -74,11 +74,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <Star className="w-3 h-3 fill-white" />
                   <span>Best Seller</span>
                 </Badge>
-                <Badge variant="secondary" className="flex items-center gap-1">
+                <Badge variant="default" className="flex items-center gap-1">
                   <Globe className="w-3 h-3" />
                   <span>{product.region}</span>
                 </Badge>
-                <Badge variant="secondary" className="flex items-center gap-1">
+                <Badge variant="default" className="flex items-center gap-1">
                   <Tag className="w-3 h-3" />
                   <span>{product.category}</span>
                 </Badge>
