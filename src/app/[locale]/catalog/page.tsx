@@ -49,9 +49,9 @@ export default async function CatalogPage({ params, searchParams }: CatalogPageP
     .select('brand, category, region')
     .eq('is_active', true);
 
-  const brands = [...new Set(allProducts?.map((p) => p.brand) || [])];
-  const categories = [...new Set(allProducts?.map((p) => p.category) || [])];
-  const regions = [...new Set(allProducts?.map((p) => p.region) || [])];
+  const brands = Array.from(new Set(allProducts?.map((p) => p.brand) || []));
+  const categories = Array.from(new Set(allProducts?.map((p) => p.category) || []));
+  const regions = Array.from(new Set(allProducts?.map((p) => p.region) || []));
 
   return (
     <div className="min-h-screen bg-background py-12">
