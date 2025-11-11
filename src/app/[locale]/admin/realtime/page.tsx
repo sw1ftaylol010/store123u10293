@@ -148,7 +148,7 @@ export default async function AdminRealtimePage({
                     <div
                       className="h-full bg-primary rounded-full"
                       style={{
-                        width: `${(count / sortedEvents[0][1]) * 100}%`,
+                        width: `${((count as number) / (sortedEvents[0][1] as number)) * 100}%`,
                       }}
                     />
                   </div>
