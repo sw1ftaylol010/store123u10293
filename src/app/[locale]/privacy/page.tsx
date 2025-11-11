@@ -3,7 +3,7 @@ import { privacyPolicyContent } from '@/lib/legal/privacy-content';
 import { Card } from '@/components/ui/Card';
 
 export default function PrivacyPage({ params }: { params: { locale: Locale } }) {
-  const content = privacyPolicyContent[params.locale] || privacyPolicyContent.en;
+  const content = privacyPolicyContent[params.locale as keyof typeof privacyPolicyContent] || privacyPolicyContent.en;
 
   return (
     <div className="min-h-screen bg-background py-12">
