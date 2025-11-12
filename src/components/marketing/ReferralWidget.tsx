@@ -80,7 +80,7 @@ export function ReferralWidget({ userEmail }: ReferralWidgetProps) {
       <Card className="p-6">
         <div className="text-center">
           <Users className="w-12 h-12 text-primary mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-white mb-2">
+          <h3 className="text-lg font-semibold text-text-primary mb-2">
             Refer Friends & Earn
           </h3>
           <p className="text-text-secondary mb-4">
@@ -111,7 +111,7 @@ export function ReferralWidget({ userEmail }: ReferralWidgetProps) {
             <Users className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-text-primary">
               Refer Friends, Earn Together
             </h3>
             <p className="text-sm text-text-secondary">
@@ -144,7 +144,7 @@ export function ReferralWidget({ userEmail }: ReferralWidgetProps) {
 
         {/* Referral Code */}
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-text-primary mb-2">
             Your Referral Code
           </label>
           <div className="flex gap-2">
@@ -175,7 +175,7 @@ export function ReferralWidget({ userEmail }: ReferralWidgetProps) {
 
         {/* Referral URL */}
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-text-primary mb-2">
             Your Referral Link
           </label>
           <div className="flex gap-2">
@@ -206,7 +206,7 @@ export function ReferralWidget({ userEmail }: ReferralWidgetProps) {
 
         {/* Share buttons */}
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-text-primary mb-2">
             Share on Social Media
           </label>
           <div className="flex gap-2">

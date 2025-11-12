@@ -22,8 +22,15 @@ export default async function AdminLayout({
 
   // TODO: Add proper admin role check
   // For now, check if user is admin
-  const adminEmails = ['admin@giftcards.com', 'test@test.com', '123aijsdfhAwe08912eA@asihjfbO.comasIAUG']; // Replace with actual admin check
-  if (!adminEmails.includes(user.email || '')) {
+  const adminEmails = [
+    'admin@giftcards.com', 
+    'test@test.com', 
+    '123aijsdfhawe08912ea@asihjfbo.comasiaug' // lowercase because Supabase stores emails in lowercase
+  ];
+  
+  // Case-insensitive email comparison
+  const userEmailLower = (user.email || '').toLowerCase();
+  if (!adminEmails.some(email => email.toLowerCase() === userEmailLower)) {
     redirect(`/${params.locale}`);
   }
 
