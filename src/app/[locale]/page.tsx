@@ -6,6 +6,9 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { createClient } from '@/lib/supabase/server';
 import { formatCurrency, calculateDiscountedPrice } from '@/lib/utils';
+import type { Database } from '@/types/database.types';
+
+type Product = Database['public']['Tables']['products']['Row'];
 import { 
   Zap, Shield, CheckCircle, Lock, 
   ArrowRight, Sparkles, TrendingUp,
@@ -179,7 +182,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {serializedTopProducts?.map((product) => {
+            {serializedTopProducts?.map((product: Product) => {
               const discountedPrice = calculateDiscountedPrice(
                 product.min_nominal,
                 product.discount_percentage
