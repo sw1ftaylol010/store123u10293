@@ -47,10 +47,15 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
     .lte('start_date', new Date().toISOString())
     .single();
 
+  // Serialize data for client components
+  const serializedProducts = allProducts ? JSON.parse(JSON.stringify(allProducts)) : [];
+  const serializedTopProducts = topProducts ? JSON.parse(JSON.stringify(topProducts)) : [];
+  const serializedFlashSale = flashSale ? JSON.parse(JSON.stringify(flashSale)) : null;
+
   return (
     <div className="w-full">
       {/* Flash Sale Banner */}
-      {flashSale && <FlashSaleBanner flashSale={flashSale} />}
+      {serializedFlashSale && <FlashSaleBanner flashSale={serializedFlashSale} />}
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-primary-50 via-white to-background-secondary">
         {/* Animated gradient orbs */}
@@ -79,7 +84,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
             </p>
 
             {/* Hero Configurator */}
-            <HeroConfigurator locale={params.locale} products={allProducts || []} />
+            <HeroConfigurator locale={params.locale} products={serializedProducts} />
 
             {/* Brand Logos */}
             <div className="flex flex-wrap justify-center items-center gap-8 pt-16">
@@ -174,7 +179,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {topProducts?.map((product) => {
+            {serializedTopProducts?.map((product) => {
               const discountedPrice = calculateDiscountedPrice(
                 product.min_nominal,
                 product.discount_percentage
