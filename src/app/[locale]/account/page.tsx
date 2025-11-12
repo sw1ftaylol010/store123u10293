@@ -52,13 +52,13 @@ export default async function AccountPage({ params }: { params: { locale: Locale
     <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">
             {t.account.title}
           </h1>
           <p className="text-text-secondary mb-8">{user.email}</p>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-2xl font-semibold text-text-primary">
               {t.account.orderHistory}
             </h2>
 
@@ -72,7 +72,7 @@ export default async function AccountPage({ params }: { params: { locale: Locale
                           <span className="text-sm text-text-secondary">
                             {t.account.orderNumber}
                           </span>
-                          <span className="font-mono text-sm text-white">
+                          <span className="font-mono text-sm text-text-primary">
                             {order.id.slice(0, 8)}
                           </span>
                           {getStatusBadge(order.status)}
@@ -93,7 +93,7 @@ export default async function AccountPage({ params }: { params: { locale: Locale
                       {order.order_items?.map((item: any) => (
                         <div key={item.id} className="flex items-start justify-between">
                           <div className="flex-1">
-                            <h3 className="font-medium text-white">
+                            <h3 className="font-medium text-text-primary">
                               {item.products?.brand} Gift Card
                             </h3>
                             <p className="text-sm text-text-secondary">
@@ -148,7 +148,7 @@ export default async function AccountPage({ params }: { params: { locale: Locale
 
           {/* Referral Program Section */}
           <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-white mb-4">
+            <h2 className="text-2xl font-semibold text-text-primary mb-4">
               Refer Friends & Earn
             </h2>
             <ReferralWidget userEmail={user.email || undefined} />
