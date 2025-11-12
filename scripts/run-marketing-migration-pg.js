@@ -1,25 +1,18 @@
 const { Client } = require('pg');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config({ path: '.env.local' });
 
-// Parse the Supabase URL to get connection details
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+// Get password from command line
 const dbPassword = process.argv[2];
 
-if (!supabaseUrl || !dbPassword) {
+if (!dbPassword) {
   console.error('❌ Usage: node run-marketing-migration-pg.js <database-password>');
   console.error('   Get password from: Supabase Dashboard > Project Settings > Database');
   process.exit(1);
 }
 
-// Extract project ID from URL: https://xxx.supabase.co -> xxx
-const projectId = supabaseUrl.match(/https:\/\/([a-z]+)\.supabase\.co/)?.[1];
-
-if (!projectId) {
-  console.error('❌ Could not parse Supabase URL');
-  process.exit(1);
-}
+// Hardcoded Supabase project ID (from mbbzuvqxvepdvnlelhcg.supabase.co)
+const projectId = 'mbbzuvqxvepdvnlelhcg';
 
 const client = new Client({
   host: `db.${projectId}.supabase.co`,
