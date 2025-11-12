@@ -55,7 +55,32 @@ const reviewComments = [
   'Very satisfied!',
   'Quick & easy!',
   'Perfect!',
-  '10/10 service!'
+  '10/10 service!',
+  'Got it in 2 min!',
+  'Best prices online!',
+  'Code worked instantly!',
+  'No problems at all!',
+  'Totally legit!',
+  'Smooth transaction!',
+  'Great experience!',
+  'Saved so much money!',
+  'Buying again soon!',
+  'Thanks!',
+  'Super easy process!',
+  'Codes always work!',
+  'Best site ever!',
+  'Never disappointed!',
+  'Reliable service!',
+  'Used many times!',
+  'Trusted seller!',
+  'Instant delivery as promised!',
+  'Cheaper than retail!',
+  'Worth every penny!',
+  'My go-to site!',
+  'Flawless service!',
+  'Highly trustworthy!',
+  'Perfect every time!',
+  'No complaints!'
 ];
 
 // Generate random activity
@@ -118,40 +143,38 @@ export function RealTimeActivityFeed() {
 
   // Generate NEW random activities every 8-12 seconds
   useEffect(() => {
-    const generateNewActivity = () => {
-      const newActivity = generateRandomActivity();
-      setActivities((prev) => {
-        const updated = [...prev.slice(1), newActivity]; // Remove first, add new at end
-        return updated;
-      });
-      // Reset to show the newest activity
-      setCurrentIndex((prev) => (prev === activities.length - 1 ? prev : prev));
-    };
-
-    // Random interval between 8-12 seconds
-    const scheduleNext = () => {
+    const scheduleNext = (): NodeJS.Timeout => {
       const delay = Math.floor(Math.random() * 4000) + 8000; // 8-12 seconds
       return setTimeout(() => {
-        generateNewActivity();
+        const newActivity = generateRandomActivity();
+        setActivities((prev) => {
+          const updated = [...prev.slice(1), newActivity]; // Remove first, add new at end
+          return updated;
+        });
         scheduleNext();
       }, delay);
     };
 
     const timeout = scheduleNext();
     return () => clearTimeout(timeout);
-  }, [activities.length]);
+  }, []);
 
-  // Randomize viewers count every 10-20 seconds
+  // Randomize viewers count every 5-15 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setViewersCount((prev) => {
-        const change = Math.floor(Math.random() * 10) - 5; // -5 to +4
-        const newCount = Math.max(100, Math.min(200, prev + change));
-        return newCount;
-      });
-    }, Math.floor(Math.random() * 10000) + 10000); // 10-20 seconds
+    const scheduleNextUpdate = (): NodeJS.Timeout => {
+      const delay = Math.floor(Math.random() * 10000) + 5000; // 5-15 seconds
+      return setTimeout(() => {
+        setViewersCount((prev) => {
+          const change = Math.floor(Math.random() * 15) - 7; // -7 to +7
+          const newCount = Math.max(100, Math.min(200, prev + change));
+          return newCount;
+        });
+        scheduleNextUpdate();
+      }, delay);
+    };
 
-    return () => clearInterval(interval);
+    const timeout = scheduleNextUpdate();
+    return () => clearTimeout(timeout);
   }, []);
 
   const getIcon = (type: string) => {
