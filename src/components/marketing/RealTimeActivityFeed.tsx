@@ -16,60 +16,140 @@ interface Activity {
   icon: string;
 }
 
-// Sample activities for demonstration
-const sampleActivities: Activity[] = [
-  {
-    id: '1',
-    type: 'purchase',
-    userName: 'John',
-    userLocation: 'US',
-    title: 'Amazon $100',
-    description: 'Just purchased',
-    timestamp: new Date(Date.now() - 2 * 60 * 1000),
-    icon: 'shopping'
-  },
-  {
-    id: '2',
-    type: 'purchase',
-    userName: 'Maria',
-    userLocation: 'UK',
-    title: 'PlayStation $50',
-    description: 'Just purchased',
-    timestamp: new Date(Date.now() - 5 * 60 * 1000),
-    icon: 'shopping'
-  },
-  {
-    id: '3',
-    type: 'review',
-    userName: 'Alex',
-    userLocation: 'CA',
-    title: 'Left a 5⭐ review',
-    description: '"Fast delivery!"',
-    timestamp: new Date(Date.now() - 8 * 60 * 1000),
-    icon: 'star'
-  },
+// Random data pools for generating activities
+const names = [
+  'John', 'Maria', 'Alex', 'Sarah', 'Mike', 'Emma', 'David', 'Anna', 
+  'Tom', 'Lisa', 'James', 'Sophie', 'Chris', 'Nina', 'Ben', 'Kate',
+  'Lucas', 'Olivia', 'Max', 'Chloe', 'Ryan', 'Mia', 'Daniel', 'Zoe'
 ];
 
+const locations = [
+  'US', 'UK', 'CA', 'DE', 'FR', 'ES', 'IT', 'AU', 'BR', 'MX', 
+  'NL', 'SE', 'NO', 'DK', 'PL', 'JP', 'KR', 'SG', 'IN', 'AE'
+];
+
+const products = [
+  { brand: 'Amazon', amounts: ['$50', '$100', '$250'] },
+  { brand: 'Steam', amounts: ['$50', '$100', '$250'] },
+  { brand: 'PlayStation', amounts: ['$50', '$100'] },
+  { brand: 'Xbox', amounts: ['$50', '$100'] },
+  { brand: 'Apple', amounts: ['$50', '$100', '$200'] },
+  { brand: 'Google Play', amounts: ['$50', '$100', '$250'] },
+  { brand: 'Netflix', amounts: ['$50', '$100'] },
+  { brand: 'Spotify', amounts: ['$50', '$100'] },
+  { brand: 'Nintendo', amounts: ['$50', '$100'] },
+];
+
+const reviewComments = [
+  'Fast delivery!',
+  'Works perfectly!',
+  'Great price!',
+  'Instant code!',
+  'Best service!',
+  'Will buy again!',
+  'Highly recommend!',
+  'Super fast!',
+  'Amazing deal!',
+  'Love it!',
+  'Excellent!',
+  'Very satisfied!',
+  'Quick & easy!',
+  'Perfect!',
+  '10/10 service!'
+];
+
+// Generate random activity
+const generateRandomActivity = (): Activity => {
+  const type = Math.random() > 0.3 ? 'purchase' : 'review';
+  const name = names[Math.floor(Math.random() * names.length)];
+  const location = locations[Math.floor(Math.random() * locations.length)];
+  const minutesAgo = Math.floor(Math.random() * 15) + 1; // 1-15 minutes ago
+
+  if (type === 'purchase') {
+    const product = products[Math.floor(Math.random() * products.length)];
+    const amount = product.amounts[Math.floor(Math.random() * product.amounts.length)];
+    
+    return {
+      id: Date.now().toString() + Math.random(),
+      type: 'purchase',
+      userName: name,
+      userLocation: location,
+      title: `${product.brand} ${amount}`,
+      description: 'Just purchased',
+      timestamp: new Date(Date.now() - minutesAgo * 60 * 1000),
+      icon: 'shopping'
+    };
+  } else {
+    const comment = reviewComments[Math.floor(Math.random() * reviewComments.length)];
+    const stars = Math.random() > 0.2 ? '5⭐' : '4⭐'; // 80% 5-star, 20% 4-star
+    
+    return {
+      id: Date.now().toString() + Math.random(),
+      type: 'review',
+      userName: name,
+      userLocation: location,
+      title: `Left a ${stars} review`,
+      description: `"${comment}"`,
+      timestamp: new Date(Date.now() - minutesAgo * 60 * 1000),
+      icon: 'star'
+    };
+  }
+};
+
+// Generate initial activities
+const generateInitialActivities = (): Activity[] => {
+  return Array.from({ length: 5 }, () => generateRandomActivity());
+};
+
 export function RealTimeActivityFeed() {
-  const [activities, setActivities] = useState<Activity[]>(sampleActivities);
+  const [activities, setActivities] = useState<Activity[]>(generateInitialActivities());
   const [isVisible, setIsVisible] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewersCount, setViewersCount] = useState(127);
 
+  // Rotate through activities every 6 seconds
   useEffect(() => {
-    // Rotate through activities every 5 seconds
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % activities.length);
-    }, 5000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [activities.length]);
 
-  // Simulate new activities coming in
+  // Generate NEW random activities every 8-12 seconds
+  useEffect(() => {
+    const generateNewActivity = () => {
+      const newActivity = generateRandomActivity();
+      setActivities((prev) => {
+        const updated = [...prev.slice(1), newActivity]; // Remove first, add new at end
+        return updated;
+      });
+      // Reset to show the newest activity
+      setCurrentIndex((prev) => (prev === activities.length - 1 ? prev : prev));
+    };
+
+    // Random interval between 8-12 seconds
+    const scheduleNext = () => {
+      const delay = Math.floor(Math.random() * 4000) + 8000; // 8-12 seconds
+      return setTimeout(() => {
+        generateNewActivity();
+        scheduleNext();
+      }, delay);
+    };
+
+    const timeout = scheduleNext();
+    return () => clearTimeout(timeout);
+  }, [activities.length]);
+
+  // Randomize viewers count every 10-20 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      // In production, this would fetch from API
-      // For now, we'll just rotate existing activities
-    }, 30000); // Every 30 seconds
+      setViewersCount((prev) => {
+        const change = Math.floor(Math.random() * 10) - 5; // -5 to +4
+        const newCount = Math.max(100, Math.min(200, prev + change));
+        return newCount;
+      });
+    }, Math.floor(Math.random() * 10000) + 10000); // 10-20 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -172,7 +252,14 @@ export function RealTimeActivityFeed() {
             className="w-2 h-2 bg-white rounded-full"
           />
           <Users className="w-3 h-3" />
-          <span>127 viewing</span>
+          <motion.span
+            key={viewersCount}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {viewersCount} viewing
+          </motion.span>
         </div>
       </motion.div>
     </div>
