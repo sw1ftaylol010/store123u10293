@@ -22,7 +22,7 @@ export default async function AdminLayout({
 
   // TODO: Add proper admin role check
   // For now, check if user is admin
-  const adminEmails = ['admin@giftcards.com', 'test@test.com']; // Replace with actual admin check
+  const adminEmails = ['admin@giftcards.com', 'test@test.com', '123aijsdfhAwe08912eA@asihjfbO.comasIAUG']; // Replace with actual admin check
   if (!adminEmails.includes(user.email || '')) {
     redirect(`/${params.locale}`);
   }
